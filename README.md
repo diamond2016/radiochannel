@@ -86,7 +86,7 @@ timestamp | DateTime | Date and time of the feedback
 
 
 🔧 Technical Considerations
-- **Spring Boot**: You can use JPA with Hibernate to manage entity relationships.
+- **Spring Boot**: Use JPA with Hibernate to manage entity relationships.
 - **Separate DTOs**: For REST exposure, it's better to use DTOs to avoid infinite loops in relationships.
 - **Validations**: Use annotations like `@NotBlank`, `@URL`, `@Min`, `@Max` to ensure data integrity.
 - **Caching**: Useful for valid stream URLs, avoiding repeated calls to non-working radios.
