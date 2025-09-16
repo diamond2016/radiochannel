@@ -13,21 +13,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name="genre")
-public class Genre {
-
+@Table(name="tag")
+public class Tag {
     @Id
     @GeneratedValue(generator = "UUID")
     private UUID id;
 
     @Column(nullable = false)
-    private String name;
-    
-    private String description;
+    private String label;
+
 }

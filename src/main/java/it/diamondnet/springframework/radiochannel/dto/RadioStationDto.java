@@ -1,6 +1,6 @@
 package it.diamondnet.springframework.radiochannel.dto;
 
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -25,6 +25,6 @@ public class RadioStationDto {
     private String logoUrl;         //	URL immagine/logo
     private Boolean isActive;	    // Flag per indicare se il link è funzionante
     private String description;	    // Breve descrizione
-    private List<GenreDto> genres;	    // Generi associati (relazione molti-a-molti)
-    private List<TagDto> tags;	        // Parole chiave (relazione molti-a-molti)
+    private Set<GenreDto> genres;	    // Generi associati (relazione molti-a-molti)
+    private Set<TagDto> tags;	        // Parole chiave (relazione molti-a-molti)
 }
