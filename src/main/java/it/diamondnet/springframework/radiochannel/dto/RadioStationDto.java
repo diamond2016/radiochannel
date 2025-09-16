@@ -1,17 +1,21 @@
-package it.diamondnet.springframework.radiochannel.model;
+package it.diamondnet.springframework.radiochannel.dto;
 
 import java.util.List;
 import java.util.UUID;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 // Represents a radio station available for streaming.
-@Builder
 @Data
-public class RadioStation {
-    private final UUID id; 	        // identificativo univoco
-    private final String name;      // nome ufficiale della stazione
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class RadioStationDto {
+    private  UUID id; 	        // identificativo univoco
+    private  String name;      // nome ufficiale della stazione
     private String streamUrl;	    // URL diretto al flusso audio (es. .mp3, .aac)
     private String website;         // 	Sito ufficiale
     private String country;	        // Paese di origine
@@ -21,6 +25,6 @@ public class RadioStation {
     private String logoUrl;         //	URL immagine/logo
     private Boolean isActive;	    // Flag per indicare se il link è funzionante
     private String description;	    // Breve descrizione
-    private List<Genre> genres;	    // Generi associati (relazione molti-a-molti)
-    private List<Tag> tags;	        // Parole chiave (relazione molti-a-molti)
+    private List<GenreDto> genres;	    // Generi associati (relazione molti-a-molti)
+    private List<TagDto> tags;	        // Parole chiave (relazione molti-a-molti)
 }

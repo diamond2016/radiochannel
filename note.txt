@@ -1,0 +1,101 @@
+ That's an excellent architectural question, and it's one of the most common decisions to make when designing a Spring Boot application.
+
+  To give you the direct answer: The typical and strongly recommended best practice is to use separate classes for your database entities and your API Data Transfer
+  Objects (DTOs).
+
+  You should not use a single, heavily annotated class for both purposes. While it might seem faster initially, it leads to significant problems down the road.
+
+  Here is a breakdown of the recommended architecture and why it's the standard approach.
+
+  Recommended Architecture
+
+   1. `domain` (or `entities`) package: This is where your JPA entities live.
+       * Classes here are annotated with @Entity, @Table, @Id, @GeneratedValue, @Column, and relationship annotations (@ManyToOne, @ManyToMany, etc.).
+       * Their sole purpose is to represent the state of your data in the database. They model the database schema.
+       * Example: radiochannel/src/main/java/it/diamondnet/springframework/radiochannel/domain/RadioStation.java
+
+   2. `dto` package: This is where your Data Transfer Objects live.
+       * These are plain Java objects (POJOs). They might have validation annotations (@NotBlank, @Size) if they are used for input, but they do not have any JPA or
+         persistence-related annotations.
+       * Their purpose is to define the "shape" of the data being sent to or from your API. They are your API's public contract.
+       * Example: radiochannel/src/main/java/it/diamondnet/springframework/radiochannel/dto/RadioStationDto.java
+
+   3. `mapper` package: This package contains classes responsible for converting between Entities and DTOs.
+
+  Why This Separation is Crucial (The "Why")
+
+   1. Separation of Concerns: Your API (the "view" of your data) and your database schema (the "storage" of your data) are two different concerns. They should be able
+      to evolve independently. You might want to refactor your database tables for performance, but that should not break the public contract of your REST API.
+
+   2. API Contract Stability: Your DTOs define a stable contract for your API clients. If you expose your entities directly, any change to the database entity (like
+      renaming a column or changing a relationship) immediately becomes a breaking change for your API consumers.
+
+   3. Security: Entities often contain fields that should not be exposed to the outside world (e.g., internal flags, timestamps managed by the database, or
+      relationships to other sensitive data). Using DTOs ensures you only expose the fields you explicitly choose.
+
+   4. Avoiding Lazy Loading & Performance Issues: JPA entities often use lazy loading for relationships to improve performance. If you serialize an entity directly to
+      JSON and a lazy-loaded collection is accessed, it can either trigger unexpected database queries or, more commonly, throw a LazyInitializationException because
+      the database session is already closed.
+
+   5. Preventing Infinite Recursion: With bidirectional relationships (e.g., a RadioStation has a list of Genres, and a Genre has a list of RadioStations), serializing
+      an entity directly to JSON will cause an infinite loop and a stack overflow. DTOs break this cycle.
+
+  How to Implement It (The "How")
+
+  Here is the typical workflow for a POST request to create a new radio station:
+
+   1. Controller: The @RestController receives a RadioStationDto in the request body.
+
+   1     @PostMapping
+   2     public ResponseEntity<RadioStationDto> createRadioStation(@RequestBody RadioStationDto radioStationDto) {
+   3         RadioStationDto savedDto = radioStationService.create(radioStationDto);
+   4         return new ResponseEntity<>(savedDto, HttpStatus.CREATED);
+   5     }
+
+   2. Service: The service layer contains the business logic.
+       * It accepts the RadioStationDto.
+       * It uses a mapper to convert the RadioStationDto into a RadioStation entity.
+       * It uses the RadioStationRepository to save the entity to the database.
+       * The repository returns the saved entity (now with a generated ID).
+       * It uses the mapper again to convert the saved RadioStation entity back into a RadioStationDto.
+       * It returns the RadioStationDto to the controller.
+
+  How to Handle the Mapping
+
+  You have two main options for the entity-DTO conversion:
+
+   1. Manual Mapping: Create a simple class with static methods. This is fine for small projects but can become tedious.
+
+   1     // In a new class like RadioStationMapper.java
+   2     public static RadioStation toEntity(RadioStationDto dto) {
+   3         // manual conversion...
+   4     }
+   5
+   6     public static RadioStationDto toDto(RadioStation entity) {
+   7         // manual conversion...
+   8     }
+
+   2. Use a Library (Recommended): Libraries like MapStruct are excellent for this. MapStruct is a compile-time code generator, so it's extremely fast and requires
+      very little boilerplate.
+       * You define an interface, and MapStruct generates the implementation for you during compilation.
+
+   1     // In a new interface in the 'mapper' package
+   2     @Mapper(componentModel = "spring")
+   3     public interface RadioStationMapper {
+   4         RadioStation toEntity(RadioStationDto dto);
+   5         RadioStationDto toDto(RadioStation entity);
+   6     }
+
+  Next Steps for Your Project
+
+  So, to answer your question directly: Yes, you should create new classes in a `domain` package.
+
+   1. Rename your current model package to dto.
+   2. Create a new domain package.
+   3. Copy the classes from dto to domain.
+   4. Annotate the classes in the domain package with @Entity, @Id, etc., to turn them into proper JPA entities.
+   5. Keep the classes in the dto package as plain objects. You might want to add Dto as a suffix to the class names (e.g., RadioStationDto) for clarity, which is a
+      very common convention.
+
+  This approach will give you a clean, maintainable, and scalable architecture. Would you like me to start by refactoring one of the classes, for example, Genre, to
+  show you how this would look in practice?
