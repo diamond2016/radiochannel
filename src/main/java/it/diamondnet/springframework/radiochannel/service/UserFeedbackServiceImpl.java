@@ -40,7 +40,7 @@ public class UserFeedbackServiceImpl implements UserFeedbackService {
     @Override
     public void updateUserFeedback(UUID id, UserFeedbackDto userFeedbackDto) {
         userFeedbackRepository.findById(id).ifPresent(userFeedback -> {
-            userFeedback.setRadioId(userFeedbackDto.getRadioId());
+            userFeedback.setRadioStation(userFeedbackDto.getRadioStation());
             userFeedback.setUserId(userFeedbackDto.getUserId());
             userFeedback.setRating(userFeedbackDto.getRating());
             userFeedback.setComment(userFeedbackDto.getComment());
