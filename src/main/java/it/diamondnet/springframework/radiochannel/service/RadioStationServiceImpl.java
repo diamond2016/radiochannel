@@ -4,6 +4,7 @@ import it.diamondnet.springframework.radiochannel.dto.RadioStationDto;
 import it.diamondnet.springframework.radiochannel.mapper.GenreMapper;
 import it.diamondnet.springframework.radiochannel.mapper.RadioStationMapper;
 import it.diamondnet.springframework.radiochannel.mapper.TagMapper;
+import it.diamondnet.springframework.radiochannel.mapper.UserFeedbackMapper;
 import it.diamondnet.springframework.radiochannel.repositories.RadioStationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class RadioStationServiceImpl implements RadioStationService {
     private final RadioStationMapper radioStationMapper;
     private final GenreMapper genreMapper;
     private final TagMapper tagMapper;
+    private final UserFeedbackMapper userFeedbackMapper;
 
     @Override
     public Set<RadioStationDto> getAllRadioStations() {
@@ -62,6 +64,11 @@ public class RadioStationServiceImpl implements RadioStationService {
             if (radioStationDto.getTags() != null) {
                 radioStation.setTags(radioStationDto.getTags().stream()
                         .map(tagMapper::toEntity)
+                        .collect(Collectors.toSet()));
+            }
+            if (radioStationDto.getFeedbacks() != null) {
+                radioStation.setFeedbacks(radioStationDto.getFeedbacks().stream()
+                        .map(userFeedbackMapper::toEntity)
                         .collect(Collectors.toSet()));
             }
             radioStationRepository.save(radioStation);

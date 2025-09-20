@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,4 +70,9 @@ public class RadioStation {
     @JoinTable(name = "radio_station_tag", joinColumns = @JoinColumn(name = "radio_station_id"), 
                 inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;        // Parole chiave (relazione molti-a-molti)
+
+    @OneToMany
+    @JoinTable(name = "radio_station_user_feedback", joinColumns = @JoinColumn(name = "radio_station_id"), 
+                inverseJoinColumns = @JoinColumn(name = "id"))
+    private Set<UserFeedback> feedbacks;        // Feedback su una stazione (relazione uno-a-molti)
 }

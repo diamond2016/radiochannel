@@ -27,4 +27,5 @@ public class RadioStationDto {
     private String description;	    // Breve descrizione
     private Set<GenreDto> genres;	 // Generi associati (relazione molti-a-molti)
     private Set<TagDto> tags;	     // Parole chiave (relazione molti-a-molti)
+    private Set<UserFeedbackDto> feedbacks;	     // Feedback utenti sulla radio (relazione uno-a-molti)
 }
