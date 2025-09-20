@@ -71,8 +71,6 @@ public class RadioStation {
                 inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;        // Parole chiave (relazione molti-a-molti)
 
-    @OneToMany
-    @JoinTable(name = "radio_station_user_feedback", joinColumns = @JoinColumn(name = "radio_station_id"), 
-                inverseJoinColumns = @JoinColumn(name = "id"))
+    @OneToMany(mappedBy = "radioStation")
     private Set<UserFeedback> feedbacks;        // Feedback su una stazione (relazione uno-a-molti)
 }
