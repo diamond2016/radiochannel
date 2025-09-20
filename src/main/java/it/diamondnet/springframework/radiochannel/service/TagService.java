@@ -10,7 +10,7 @@ public interface TagService {
     Set<TagDto> getSetTags();
 
     // insert new Tag
-    TagDto saveNewTag(String label);
+    TagDto saveNewTag(TagDto tag);
 
     // update existing Tag
     void updateTagById(UUID tagId, TagDto tag);

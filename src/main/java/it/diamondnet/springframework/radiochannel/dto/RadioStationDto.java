@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class RadioStationDto {
-    private  UUID id; 	        // identificativo univoco
-    private  String name;      // nome ufficiale della stazione
+    private  UUID id; 	               // identificativo univoco
+    private  String name;           // nome ufficiale della stazione
     private String streamUrl;	    // URL diretto al flusso audio (es. .mp3, .aac)
     private String website;         // 	Sito ufficiale
     private String country;	        // Paese di origine
@@ -25,6 +25,6 @@ public class RadioStationDto {
     private String logoUrl;         //	URL immagine/logo
     private Boolean isActive;	    // Flag per indicare se il link è funzionante
     private String description;	    // Breve descrizione
-    private Set<GenreDto> genres;	    // Generi associati (relazione molti-a-molti)
-    private Set<TagDto> tags;	        // Parole chiave (relazione molti-a-molti)
+    private Set<GenreDto> genres;	 // Generi associati (relazione molti-a-molti)
+    private Set<TagDto> tags;	     // Parole chiave (relazione molti-a-molti)
 }

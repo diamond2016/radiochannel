@@ -1,3 +1,11 @@
+## Current Status
+
+The project is currently in the initial development phase. The backend has been set up with Spring Boot, and the core domain models (`RadioStation`, `Genre`, `Tag`, `UserFeedback`) have been created as JPA entities.
+
+The service layer has been implemented with `RadioStationService`, `GenreService`, and `UserFeedbackService`, along with their implementations. The data access layer is handled by Spring Data JPA repositories.
+
+The next steps will involve creating REST controllers to expose the services through a REST API, and then developing a frontend to consume the API.
+
 > [!NOTE]
 > This documentation is a work in progress.
 
@@ -48,8 +56,8 @@ codec | String | Audio format (e.g., MP3, AAC)
 logoUrl | String | Image/logo URL
 isActive | Boolean | Flag to indicate if the link is working
 description | String | Short description
-genres | List\<Genre> | Associated genres (many-to-many relationship)
-tags | List\<Tag> | Keywords (many-to-many relationship)
+genres | List<Genre> | Associated genres (many-to-many relationship)
+tags | List<Tag> | Keywords (many-to-many relationship)
 
 2. Genre
 Musical or thematic category of the radio (e.g., Rock, Jazz, News, Talk).

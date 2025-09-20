@@ -5,10 +5,8 @@ import org.mapstruct.Mapper;
 import it.diamondnet.springframework.radiochannel.domain.RadioStation;
 import it.diamondnet.springframework.radiochannel.dto.RadioStationDto;
 
+@Mapper(componentModel = "spring", uses = {TagMapper.class, GenreMapper.class})
 public interface RadioStationMapper {
-@Mapper(componentModel = "spring")
-public interface TagMapper {
     RadioStation toEntity(RadioStationDto dto);
     RadioStationDto toDto(RadioStation entity);
-}
 }

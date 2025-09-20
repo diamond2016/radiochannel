@@ -27,25 +27,26 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public TagDto saveNewTag(String label) {
-        Tag newTag = Tag.builder().label(label).build();
+    public TagDto saveNewTag(TagDto tag) {
+        Tag newTag = Tag.builder()
+            .id(UUID.randomUUID())
+            .label(tag.getLabel())
+            .build();
+
         Tag savedTag = tagRepository.save(newTag);
         return tagMapper.toDto(savedTag);
     }
 
     @Override
     public void updateTagById(UUID tagId, TagDto tag) {
-        //TO DO // TO DO implement correctly update
-        //TagDto existingTag = tagRepository.findById(tagId);
-        //existingTag.setLabel(tag.getLabel());
-
+        tagRepository.findById(tagId).ifPresent(foundTag -> {
+            foundTag.setLabel(tag.getLabel());
+            tagRepository.save(foundTag);
+        });
     }
 
     @Override
     public void deleteTagById(UUID tagId) {
-        // TO DO implement correctly delete
-        //return tagRepository.findById(tagId).map(tag -> {
-        //    tagRepository.delete(tag);
-        //}).orElse(null); // Or throw an exception
+        tagRepository.deleteById(tagId);
     }
 }
