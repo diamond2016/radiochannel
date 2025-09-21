@@ -8,9 +8,9 @@ import it.diamondnet.springframework.radiochannel.dto.UserFeedbackDto;
 
 @Mapper(componentModel = "spring")
 public interface UserFeedbackMapper {
+    //@Mapping(target = "radioStation", ignore = true)
     UserFeedback toEntity(UserFeedbackDto dto);
 
-    @Mapping(source = "radioStation.id", target = "radioStationId")
+    @Mapping(source = "radioStationId", target = "radioStationId")
     UserFeedbackDto toDto(UserFeedback entity);
 }
-

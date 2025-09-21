@@ -3,7 +3,6 @@ package it.diamondnet.springframework.radiochannel.dto;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import it.diamondnet.springframework.radiochannel.domain.RadioStation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,5 +19,5 @@ public class UserFeedbackDto {
     private Integer rating;	            // Valutazione (es. da 1 a 5)
     private String comment;	            // Testo libero feedback
     private LocalDateTime   timestamp;	// Data e ora del feedback
-    private UUID radioStationId;	// ID della stazione radio associata
+    private UUID radioStationId;	    // ID della stazione radio associata
 }
