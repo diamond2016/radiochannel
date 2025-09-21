@@ -99,3 +99,97 @@
 
   This approach will give you a clean, maintainable, and scalable architecture. Would you like me to start by refactoring one of the classes, for example, Genre, to
   show you how this would look in practice?
+
+
+  The "Why" Behind the Change
+The core problem we're preventing is a circular dependency during the mapping process. Think of it like this:
+
+A RadioStation object contains a list of Tag objects.
+A Tag object will eventually contain a list of RadioStation objects that use that tag (this is the "back-reference" in the many-to-many relationship).
+When you ask MapStruct to convert a RadioStation entity to a RadioStationDto, it will start converting its list of Tags. To do that, it uses TagMapper. But if TagMapper then tries to convert the list of RadioStations inside the Tag, it would have to call RadioStationMapper again, which would then call TagMapper again... leading to an infinite loop and a crash.
+
+The @Mapping(target = "...", ignore = true) annotation is our way of telling MapStruct: "Stop here. Do not follow this path." We break the cycle.
+
+A Small Refinement for TagMapper
+The code you have is a great start. To make it fully robust and clear, we should apply the same rule to both conversion methods (toEntity and toDto). This ensures that no matter which direction you're mapping, you never accidentally trigger the circular dependency.
+
+Here is the complete and recommended version for TagMapper.java. Notice the added annotation on the toDto method.
+
+TagMapper.java
+-1
++4
+ Show full code block
+    // MapStruct is smart enough to handle this if the target property is missing.
+    @Mapping(target = "radioStations", ignore = true)
+    Tag toEntity(TagDto dto);
+
+
+    // It's also important to ignore the back-reference when creating the DTO
+    // to prevent infinite recursion if the DTO ever contains a list of stations.
+    @Mapping(target = "radioStations", ignore = true)
+    TagDto toDto(Tag entity);
+}
+
+By applying this ignore rule to both methods, you make your mapper's intent perfectly clear and protect it from future changes (e.g., if someone later adds a List<RadioStationDto> to TagDto).
+
+Take your time to review this. When you're ready, applying this same pattern to GenreMapper and any other mappers involved in bidirectional relationships will solve the annotation processor error and give you a clean, stable architecture.
+
+Let me know if you'd like a more detailed explanation of any part!
+
+===
+210925 REFACTORING
+
+Based on your request, you want unidirectional relationships where a RadioStation can have multiple Genres, Tags, and UserFeedbacks, but those entities don't have a reference back to the RadioStation.
+
+Your current RadioStation.java uses @OneToMany(mappedBy = "radioStation"). This annotation is used for bidirectional relationships and tells JPA that the other entity (e.g., UserFeedback) is the "owner" of the relationship and has a field named radioStation that maps the association. Since you want a unidirectional relationship owned by RadioStation, we need to make some changes.
+
+Here is my analysis and suggested modifications for /home/riccardo/Documenti/Programming/Projects/RadioChannel/radiochannel/src/main/java/it/diamondnet/springframework/radiochannel/domain/RadioStation.java:
+
+1. RadioStation to UserFeedback Relationship (@OneToMany)
+A single radio station can have many feedback entries, and each feedback entry belongs to only one radio station. This is a classic one-to-many relationship. For a unidirectional @OneToMany, the RadioStation table doesn't store any information about the relationship. Instead, a foreign key column (e.g., radio_station_id) is added to the user_feedback table.
+
+To achieve this, we'll use @JoinColumn to specify the foreign key column in the user_feedback table.
+
+2. RadioStation to Genre and Tag Relationships (@ManyToMany)
+A radio station can have multiple genres (e.g., "Rock", "Pop"), and a single genre can be applied to many different radio stations. The same logic applies to tags. This is a many-to-many relationship.
+
+For @ManyToMany relationships, JPA uses a "join table" (or "link table") to manage the associations. This table will contain foreign keys to both the radio_station and the genre/tag tables.
+
+We will use @ManyToMany and configure the join table using @JoinTable.
+
+3. Cascading Operations
+To simplify persistence operations, it's useful to define cascading rules. For example, when you save a RadioStation, you might also want to save its associated Genres or Tags if they are new. Using cascade = {CascadeType.PERSIST, CascadeType.MERGE} is a good starting point. CascadeType.ALL is powerful but can have unintended side effects (like deleting all genres associated with a station if you delete the station, which might not be what you want if genres are shared).
+
+Here are the recommended code changes for your RadioStation entity:
+
+
+Summary of Changes:
+genres and tags: Changed from @OneToMany to @ManyToMany. I've added @JoinTable to define the intermediate tables (radio_station_genre and radio_station_tag) that will manage these relationships. I've also added cascade options to make it easier to manage these entities along with the RadioStation.
+feedbacks: Kept as @OneToMany but removed mappedBy. I added @JoinColumn(name = "radio_station_id"), which will create a radio_station_id foreign key in the user_feedback table. cascade = CascadeType.ALL and orphanRemoval = true are added so that feedbacks are managed with their radio station; if you remove a feedback from the feedbacks set, it will be deleted from the database.
+With these changes, your RadioStation entity correctly models the unidirectional relationships you described, and you won't need to add any fields to your Genre, Tag, or UserFeedback entities.
+
+Let me know if you have any other questions!
+1. RadioStation to UserFeedback Relationship (@OneToMany)
+A single radio station can have many feedback entries, and each feedback entry belongs to only one radio station
+2. RadioStation to Genre and Tag Relationships (@ManyToMany)
+A radio station can have multiple genres (e.g., "Rock", "Pop"), and a single genre can be applied to many different radio stations. The same logic applies to tags. This is a many-to-many relationship
+
+1. RadioStation to UserFeedback Relationship (@OneToMany)
+A single radio station can have many feedback entries, and each feedback entry belongs to only one radio station
+2. RadioStation to Genre and Tag Relationships (@ManyToMany)
+A radio station can have multiple genres (e.g., "Rock", "Pop"), and a single genre can be applied to many different radio stations. The same logic applies to tags. This is a many-to-many relationship
+
+I have reviewed GenreController.java and TagController.java.
+
+  The GenreDto and TagDto are simple objects with no nested relationships, so the controllers are straightforward and correct. They take the DTOs as request
+  bodies and pass them to the service layer.
+
+  This concludes my analysis. I have:
+   1. Analyzed the DTOs and identified inconsistencies with the entity relationships.
+   2. Modified UserFeedbackDto, GenreDto, and TagDto to correctly represent the data for API communication and avoid circular dependencies.
+   3. Updated UserFeedbackMapper to handle the mapping between the entity and the new DTO structure.
+   4. Updated UserFeedbackServiceImpl to correctly handle saving and updating UserFeedback entities by fetching the associated RadioStation.
+   5. Updated RadioStationServiceImpl to correctly establish the bidirectional relationship with UserFeedback when creating or updating a RadioStation.
+   6. Verified that all controllers are consistent with the updated DTOs and service layer logic.
+
+  The codebase is now coherent with the entity relationships you described.

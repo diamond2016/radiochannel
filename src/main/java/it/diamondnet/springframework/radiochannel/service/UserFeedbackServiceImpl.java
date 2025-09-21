@@ -1,7 +1,9 @@
 package it.diamondnet.springframework.radiochannel.service;
 
+import it.diamondnet.springframework.radiochannel.domain.RadioStation;
 import it.diamondnet.springframework.radiochannel.dto.UserFeedbackDto;
 import it.diamondnet.springframework.radiochannel.mapper.UserFeedbackMapper;
+import it.diamondnet.springframework.radiochannel.repositories.RadioStationRepository;
 import it.diamondnet.springframework.radiochannel.repositories.UserFeedbackRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ public class UserFeedbackServiceImpl implements UserFeedbackService {
 
     private final UserFeedbackRepository userFeedbackRepository;
     private final UserFeedbackMapper userFeedbackMapper;
+    private final RadioStationRepository radioStationRepository;
 
     @Override
     public Set<UserFeedbackDto> getAllUserFeedbacks() {
@@ -34,13 +37,17 @@ public class UserFeedbackServiceImpl implements UserFeedbackService {
 
     @Override
     public UserFeedbackDto saveNewUserFeedback(UserFeedbackDto userFeedbackDto) {
-        return userFeedbackMapper.toDto(userFeedbackRepository.save(userFeedbackMapper.toEntity(userFeedbackDto)));
+        UserFeedback userFeedback = userFeedbackMapper.toEntity(userFeedbackDto);
+        RadioStation radioStation = radioStationRepository.findById(userFeedbackDto.getRadioStationId()).orElseThrow();
+        userFeedback.setRadioStation(radioStation);
+        return userFeedbackMapper.toDto(userFeedbackRepository.save(userFeedback));
     }
 
     @Override
     public void updateUserFeedback(UUID id, UserFeedbackDto userFeedbackDto) {
         userFeedbackRepository.findById(id).ifPresent(userFeedback -> {
-            userFeedback.setRadioStation(userFeedbackDto.getRadioStation());
+            RadioStation radioStation = radioStationRepository.findById(userFeedbackDto.getRadioStationId()).orElseThrow();
+            userFeedback.setRadioStation(radioStation);
             userFeedback.setUserId(userFeedbackDto.getUserId());
             userFeedback.setRating(userFeedbackDto.getRating());
             userFeedback.setComment(userFeedbackDto.getComment());

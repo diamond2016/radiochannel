@@ -39,9 +39,4 @@ public class UserFeedback {
 
     @Column(nullable = false)
     private LocalDateTime   timestamp;	// Data e ora del feedback
-
-    @ManyToOne
-    @JoinColumn(name = "radio_station_id")
-    private RadioStation radioStation;
-
 }

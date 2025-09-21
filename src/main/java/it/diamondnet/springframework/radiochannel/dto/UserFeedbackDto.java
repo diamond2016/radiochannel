@@ -20,7 +20,5 @@ public class UserFeedbackDto {
     private Integer rating;	            // Valutazione (es. da 1 a 5)
     private String comment;	            // Testo libero feedback
     private LocalDateTime   timestamp;	// Data e ora del feedback
-    private RadioStation radioStation;	// Stazione radio associata
-    
-    // Relazione: UserFeedback ↔ RadioStation (molti-a-uno)
+    private UUID radioStationId;	// ID della stazione radio associata
 }

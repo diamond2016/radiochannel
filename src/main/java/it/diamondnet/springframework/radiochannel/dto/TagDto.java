@@ -2,7 +2,6 @@ package it.diamondnet.springframework.radiochannel.dto;
 
 import java.util.UUID;
 
-import it.diamondnet.springframework.radiochannel.domain.RadioStation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +15,4 @@ import lombok.NoArgsConstructor;
 public class TagDto {
     private UUID id;	                // Identificativo univoco
     private String label;	            // Testo del tag
-    private RadioStation radioStation;	// Stazione radio associata
-    
-    // Relazione: Tag ↔ RadioStation (molti-a-uno)
 }

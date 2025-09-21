@@ -1,5 +1,6 @@
 package it.diamondnet.springframework.radiochannel.service;
 
+import it.diamondnet.springframework.radiochannel.domain.RadioStation;
 import it.diamondnet.springframework.radiochannel.dto.RadioStationDto;
 import it.diamondnet.springframework.radiochannel.mapper.GenreMapper;
 import it.diamondnet.springframework.radiochannel.mapper.RadioStationMapper;
@@ -40,7 +41,11 @@ public class RadioStationServiceImpl implements RadioStationService {
 
     @Override
     public RadioStationDto saveNewRadioStation(RadioStationDto radioStationDto) {
-        return radioStationMapper.toDto(radioStationRepository.save(radioStationMapper.toEntity(radioStationDto)));
+        RadioStation radioStation = radioStationMapper.toEntity(radioStationDto);
+        if (radioStation.getFeedbacks() != null) {
+            radioStation.getFeedbacks().forEach(feedback -> feedback.setRadioStation(radioStation));
+        }
+        return radioStationMapper.toDto(radioStationRepository.save(radioStation));
     }
 
     @Override
@@ -70,6 +75,7 @@ public class RadioStationServiceImpl implements RadioStationService {
                 radioStation.setFeedbacks(radioStationDto.getFeedbacks().stream()
                         .map(userFeedbackMapper::toEntity)
                         .collect(Collectors.toSet()));
+                radioStation.getFeedbacks().forEach(feedback -> feedback.setRadioStation(radioStation));
             }
             radioStationRepository.save(radioStation);
         });
