@@ -6,6 +6,11 @@ The service layer has been implemented with `RadioStationService`, `GenreService
 
 The next steps will involve creating REST controllers to expose the services through a REST API, and then developing a frontend to consume the API.
 
+* RadioStation, rappresenta una stazione radio disponibile in streaming
+* Genre, categoria musicale o tematica della radio (es. Rock, Jazz, News, Talk)
+* Tag, etichette libere per filtrare o categorizzare (es. “indie”, “politica”, “local”, “live”)
+* UserFeedback, permette agli utenti di lasciare commenti, valutazioni o segnalazioni.
+
 > [!NOTE]
 > This documentation is a work in progress.
 
