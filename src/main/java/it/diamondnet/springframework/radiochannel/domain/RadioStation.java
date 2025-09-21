@@ -60,15 +60,11 @@ public class RadioStation {
     @Column(nullable = true)
     private String description;	    // Breve descrizione
     
-    @ManyToMany
-    @JoinTable(name = "radio_station_genre", joinColumns = @JoinColumn(name = "radio_station_id"), 
-                inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private Set<Genre> genres;      // Generi associati (relazione molti-a-molti)
+    @OneToMany(mappedBy = "radioStation")
+    private Set<Genre> genres;      // Generi associati (relazione uno-a-molti)
 
-    @ManyToMany
-    @JoinTable(name = "radio_station_tag", joinColumns = @JoinColumn(name = "radio_station_id"), 
-                inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags;        // Parole chiave (relazione molti-a-molti)
+    @OneToMany(mappedBy = "radioStation")
+    private Set<Tag> tags;        // Parole chiave (relazione uno-a-molti)
 
     @OneToMany(mappedBy = "radioStation")
     private Set<UserFeedback> feedbacks;        // Feedback su una stazione (relazione uno-a-molti)

@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class RadioStationDto {
-    private  UUID id; 	               // identificativo univoco
-    private  String name;           // nome ufficiale della stazione
+    private UUID id; 	               // identificativo univoco
+    private String name;           // nome ufficiale della stazione
     private String streamUrl;	    // URL diretto al flusso audio (es. .mp3, .aac)
     private String website;         // 	Sito ufficiale
     private String country;	        // Paese di origine

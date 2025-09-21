@@ -28,10 +28,6 @@ public class UserFeedback {
     @GeneratedValue(generator = "UUID")
     private UUID id;	                    // Identificativo univoco
     
-    @ManyToOne
-    @JoinColumn(name = "radio_station_id")
-    private RadioStation radioStation;
-
     @Column(nullable = true)
     private UUID userId;	                // Utente (se autenticato)
 
@@ -43,4 +39,9 @@ public class UserFeedback {
 
     @Column(nullable = false)
     private LocalDateTime   timestamp;	// Data e ora del feedback
+
+    @ManyToOne
+    @JoinColumn(name = "radio_station_id")
+    private RadioStation radioStation;
+
 }

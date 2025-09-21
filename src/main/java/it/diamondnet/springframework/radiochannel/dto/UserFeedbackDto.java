@@ -16,9 +16,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserFeedbackDto {
     private UUID id;	                // Identificativo univoco
-    private RadioStation radioStation;	            // Stazione radio associata
     private UUID userId;	            // Utente (se autenticato)
     private Integer rating;	            // Valutazione (es. da 1 a 5)
     private String comment;	            // Testo libero feedback
     private LocalDateTime   timestamp;	// Data e ora del feedback
+    private RadioStation radioStation;	// Stazione radio associata
+    
+    // Relazione: UserFeedback ↔ RadioStation (molti-a-uno)
 }
