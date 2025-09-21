@@ -37,7 +37,7 @@ public class UserFeedbackController {
         UserFeedbackDto savedUserFeedback = userFeedbackService.saveNewUserFeedback(userFeedback);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/api/v1/user-feedback" + savedUserFeedback.getId().toString());
+        headers.add("Location", "/api/v1/user-feedback/" + savedUserFeedback.getId().toString());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }

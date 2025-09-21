@@ -49,7 +49,7 @@ public class TagController {
         TagDto savedTag = tagService.saveNewTag(tag); 
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/api/v1/tag" + savedTag.getId().toString());
+        headers.add("Location", "/api/v1/tag/" + savedTag.getId().toString());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }

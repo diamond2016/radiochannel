@@ -50,7 +50,7 @@ public class GenreController {
         GenreDto savedGenre = genreService.saveNewGenre(genre); 
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/api/v1/genre" + savedGenre.getId().toString());
+        headers.add("Location", "/api/v1/genre/" + savedGenre.getId().toString());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }

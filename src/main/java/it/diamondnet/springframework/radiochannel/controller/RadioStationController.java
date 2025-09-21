@@ -37,7 +37,7 @@ public class RadioStationController {
         RadioStationDto savedRadioStation = radioStationService.saveNewRadioStation(radioStation);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/api/v1/radio-station" + savedRadioStation.getId().toString());
+        headers.add("Location", "/api/v1/radio-station/" + savedRadioStation.getId().toString());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
