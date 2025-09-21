@@ -1,11 +1,15 @@
 package it.diamondnet.springframework.radiochannel.service;
 
 import it.diamondnet.springframework.radiochannel.domain.Tag;
+import it.diamondnet.springframework.radiochannel.dto.GenreDto;
 import it.diamondnet.springframework.radiochannel.dto.TagDto;
 import it.diamondnet.springframework.radiochannel.mapper.TagMapper;
 import it.diamondnet.springframework.radiochannel.repositories.TagRepository;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 import java.util.UUID;
@@ -48,5 +52,12 @@ public class TagServiceImpl implements TagService {
     @Override
     public void deleteTagById(UUID tagId) {
         tagRepository.deleteById(tagId);
+    }
+
+    @Override
+    public TagDto getTagById(UUID tagId) {
+        return tagRepository.findById(tagId)
+            .map(tagMapper::toDto)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }
