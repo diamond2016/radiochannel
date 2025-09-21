@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,7 +28,7 @@ public class TagController {
     private final TagService tagService;
 
     @GetMapping("{tagId}")
-    public TagDto getGenreById(@PathVariable("genreId") UUID tagId) {
+    public TagDto getGenreById(@PathVariable("tagId") UUID tagId) {
 
         log.debug("get Tag from id - in controller id: {}", tagId);
         

@@ -1,7 +1,6 @@
 package it.diamondnet.springframework.radiochannel.service;
 
 import it.diamondnet.springframework.radiochannel.domain.Tag;
-import it.diamondnet.springframework.radiochannel.dto.GenreDto;
 import it.diamondnet.springframework.radiochannel.dto.TagDto;
 import it.diamondnet.springframework.radiochannel.mapper.TagMapper;
 import it.diamondnet.springframework.radiochannel.repositories.TagRepository;
@@ -23,7 +22,7 @@ public class TagServiceImpl implements TagService {
     private final TagMapper tagMapper;
 
     @Override
-    public Set<TagDto> getSetTags() {
+    public Set<TagDto> getTags() {
         return tagRepository.findAll()
                 .stream()
                 .map(tagMapper::toDto)
