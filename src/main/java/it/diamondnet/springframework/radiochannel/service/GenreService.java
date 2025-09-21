@@ -18,4 +18,7 @@ public interface GenreService {
 
     // delete existing Genre
     void deleteGenreById(UUID genreId);
+
+    // get single Genre
+    GenreDto getGenreById(UUID genreId);
 }

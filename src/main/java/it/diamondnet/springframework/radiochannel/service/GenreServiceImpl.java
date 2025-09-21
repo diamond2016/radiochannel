@@ -4,7 +4,9 @@ import it.diamondnet.springframework.radiochannel.dto.GenreDto;
 import it.diamondnet.springframework.radiochannel.mapper.GenreMapper;
 import it.diamondnet.springframework.radiochannel.repositories.GenreRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Set;
 import java.util.UUID;
@@ -42,5 +44,12 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public void deleteGenreById(UUID genreId) {
         genreRepository.deleteById(genreId);
+    }
+
+    @Override
+    public GenreDto getGenreById(UUID genreId) {
+        return genreRepository.findById(genreId)
+                .map(genreMapper::toDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }
