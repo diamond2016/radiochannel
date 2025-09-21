@@ -22,5 +22,10 @@ The next steps will involve creating REST controllers to expose the services thr
 - **Caching**: Useful for valid stream URLs, avoiding repeated calls to non-working radios.
 - **Scheduler**: You could implement a periodic job to check the status of streaming links.
 
-## Class diagram 
+## Entities and Class diagram 
+
+1. RadioStation to UserFeedback Relationship (@OneToMany)
+A single radio station can have many feedback entries, and each feedback entry belongs to only one radio station
+2. RadioStation to Genre and Tag Relationships (@ManyToMany)
+A radio station can have multiple genres (e.g., "Rock", "Pop"), and a single genre can be applied to many different radio stations. The same logic applies to tags. This is a many-to-many relationship
 See class-diagram.md
