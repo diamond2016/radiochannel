@@ -46,27 +46,20 @@ public class RadioStation {
     private String language;	    // Lingua principale
 
     @Column(nullable = true)
-    private Integer bitrate;	    //	Qualità dello stream (es. 128 kbps)
-
-    @Column(nullable = true)
-    private String codec;	        // Formato audio (es. MP3, AAC)
-
-    @Column(nullable = true)
-    private String logoUrl;         //	URL immagine/logo
-
-    @Column(nullable = true)
     private Boolean isActive;	    // Flag per indicare se il link è funzionante
 
     @Column(nullable = true)
     private String description;	    // Breve descrizione
     
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    //@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(name = "radio_station_genre",
             joinColumns = @JoinColumn(name = "radio_station_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres;      // Generi associati (relazione molti-a-molti)
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    //@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany
     @JoinTable(name = "radio_station_tag",
             joinColumns = @JoinColumn(name = "radio_station_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))

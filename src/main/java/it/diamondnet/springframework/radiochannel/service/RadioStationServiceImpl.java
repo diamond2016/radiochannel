@@ -56,9 +56,6 @@ public class RadioStationServiceImpl implements RadioStationService {
             radioStation.setWebsite(radioStationDto.getWebsite());
             radioStation.setCountry(radioStationDto.getCountry());
             radioStation.setLanguage(radioStationDto.getLanguage());
-            radioStation.setBitrate(radioStationDto.getBitrate());
-            radioStation.setCodec(radioStationDto.getCodec());
-            radioStation.setLogoUrl(radioStationDto.getLogoUrl());
             radioStation.setIsActive(radioStationDto.getIsActive());
             radioStation.setDescription(radioStationDto.getDescription());
             if (radioStationDto.getGenres() != null) {
