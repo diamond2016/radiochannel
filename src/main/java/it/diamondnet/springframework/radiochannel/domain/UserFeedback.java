@@ -39,5 +39,5 @@ public class UserFeedback {
     private LocalDateTime timestamp;	// Data e ora del feedback
 
     @Column(nullable = false)
-    private UUID radioStationId;        // Id radio a cui si riferiscono i feedback
+    private UUID radio_station_id;        // Id radio a cui si riferiscono i feedback
 }
