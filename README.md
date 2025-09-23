@@ -14,6 +14,15 @@ The next steps will involve creating REST controllers to expose the services thr
 > [!NOTE]
 > This documentation is a work in progress.
 
+## Frontend Architecture
+
+The project will include a simple and lightweight frontend built with a Client-Side Rendering (CSR) approach.
+
+*   **Technology**: Static HTML, CSS, and Vanilla JavaScript (ES6+).
+*   **Styling**: Bootstrap 5 is used for the UI components and layout, included via CDN.
+*   **Operation**: The frontend is served as static assets from the `src/main/resources/static` directory of the Spring Boot application. JavaScript running in the browser makes API calls to the backend REST endpoints to fetch data and dynamically render the content on the pages.
+
+This architecture keeps the frontend decoupled from the backend, requiring no additional build steps or servers.
 
 🔧 Technical Considerations
 - **Spring Boot**: Use JPA with Hibernate to manage entity relationships.
