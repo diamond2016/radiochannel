@@ -193,3 +193,51 @@ I have reviewed GenreController.java and TagController.java.
    6. Verified that all controllers are consistent with the updated DTOs and service layer logic.
 
   The codebase is now coherent with the entity relationships you described.
+
+Stage: prepare Front end template
+2 pages: index.html and station.html
+use Bootstrap for styling
+please indicate series of questions to better identify the wanted layout and I will answer
+target: 2 proposal for the pages, to select and approve
+
+  General Style
+   1. Theme: Do you prefer a light or dark theme for the website? *light*
+   2. Overall Feel: Should the design be minimal and clean, or more vibrant and colorful? *minimal and clean*
+   3. Density: Do you prefer a compact layout with a lot of information visible at once, or a more spacious and airy design? *spacious*
+
+  index.html (Radio Station List)
+   4. Layout: How should the radio stations be displayed?
+       * A) A grid of cards, where each card has a station's logo, name, and country. *grid of cards*
+       * B) A table or list, with rows for each station and columns for details.
+   5. Filtering: Should there be a search bar and filter options (e.g., by genre, country)? Where should they be placed (e.g., a sidebar, or above the list)? *filter present, above*
+
+  station.html (Station Details)
+   6. Layout: How should the details of a single station be organized?
+       * A) A two-column layout (e.g., logo and player on the left, details on the right).
+       * B) A single-column layout with a clear, top-to-bottom flow of information. *single column*
+   7. Audio Player: Should there be a prominent audio player on this page to play the station's stream? 
+   *yes I need a player, but I don't want to use third party sw, I'm interested in programming myself a mine simple player with assisance, 
+   in java, this task may be postponed to better think about*
+
+## Proposals for front-end
+
+   * Theme: Light, minimal, clean, and spacious.
+   * Index Page: A grid of cards with filters above.
+   * Station Page: A single-column layout.
+   * Audio Player: A placeholder for a future custom-built player.
+
+  I will now create two distinct design proposals based on this. I'll place them in src/main/resources/static/proposal-a and 
+  src/main/resources/static/proposal-b.
+
+  Proposal A: "*Clean & Classic*"
+  This will be a clean and straightforward design using standard Bootstrap components, emphasizing clarity and ease of use.
+
+  Proposal B: "*Modern & Minimal*"
+  This will be a more stylized, modern design with custom touches to create a more unique and visually striking layout.
+   How to View the Proposals
+
+   1. Run your Spring Boot application.
+   2. Open your web browser and navigate to the following URLs:
+
+       * Proposal A (Clean & Classic): http://localhost:8080/proposal-a/ (http://localhost:8080/proposal-a/)
+       * Proposal B (Modern & Minimal): http://localhost:8080/proposal-b/ (http://localhost:8080/proposal-b
