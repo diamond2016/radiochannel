@@ -16,13 +16,12 @@ The next steps will involve creating REST controllers to expose the services thr
 
 ## Frontend Architecture
 
-The project will include a simple and lightweight frontend built with a Client-Side Rendering (CSR) approach.
+The project will include a simple and lightweight frontend built with a Server side templating.
 
-*   **Technology**: Static HTML, CSS, and Vanilla JavaScript (ES6+).
+*   **Technology**: Static HTML, CSS. ThymeLeaf form server side templating.
 *   **Styling**: Bootstrap 5 is used for the UI components and layout, included via CDN.
-*   **Operation**: The frontend is served as static assets from the `src/main/resources/static` directory of the Spring Boot application. JavaScript running in the browser makes API calls to the backend REST endpoints to fetch data and dynamically render the content on the pages.
-
-This architecture keeps the frontend decoupled from the backend, requiring no additional build steps or servers.
+*   **Operation**: The frontend is served as static assets from the `src/main/resources/static` directory of the Spring Boot application. 
+    Then ThymeLeaf render the pages 
 
 🔧 Technical Considerations
 - **Spring Boot**: Use JPA with Hibernate to manage entity relationships.
@@ -38,3 +37,5 @@ A single radio station can have many feedback entries, and each feedback entry b
 2. RadioStation to Genre and Tag Relationships (@ManyToMany)
 A radio station can have multiple genres (e.g., "Rock", "Pop"), and a single genre can be applied to many different radio stations. The same logic applies to tags. This is a many-to-many relationship
 See class-diagram.md
+
+Note: to enable lazy loading: spring.jpa.open-in-view=true
