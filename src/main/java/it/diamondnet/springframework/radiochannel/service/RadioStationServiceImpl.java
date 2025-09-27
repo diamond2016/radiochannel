@@ -42,9 +42,6 @@ public class RadioStationServiceImpl implements RadioStationService {
     @Override
     public RadioStationDto saveNewRadioStation(RadioStationDto radioStationDto) {
         RadioStation radioStation = radioStationMapper.toEntity(radioStationDto);
-        if (radioStation.getFeedbacks() != null) {
-            radioStation.getFeedbacks().forEach(feedback -> feedback.setRadio_station_id(radioStation.getId()));
-        }
         return radioStationMapper.toDto(radioStationRepository.save(radioStation));
     }
 
@@ -72,7 +69,6 @@ public class RadioStationServiceImpl implements RadioStationService {
                 radioStation.setFeedbacks(radioStationDto.getFeedbacks().stream()
                         .map(userFeedbackMapper::toEntity)
                         .collect(Collectors.toSet()));
-                radioStation.getFeedbacks().forEach(feedback -> feedback.setRadio_station_id(radioStation.getId()));
             }
             radioStationRepository.save(radioStation);
         });

@@ -1,0 +1,45 @@
+/* Proposal B: Modern & Minimal */
+
+body {
+    background-color: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.search-bar .form-control {
+    border-right: 0;
+}
+
+.search-bar .btn {
+    border-left: 0;
+}
+
+.station-card {
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+    margin-bottom: 30px;
+}
+
+.station-card:hover {
+    transform: translateY(-5px);
+}
+
+.station-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.station-card .card-body {
+    text-align: center;
+}
+
+.player-placeholder {
+    background-color: #f1f3f5;
+    border-radius: 15px;
+    padding: 80px;
+    text-align: center;
+    color: #adb5bd;
+    font-weight: bold;
+}
