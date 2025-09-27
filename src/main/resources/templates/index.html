@@ -33,12 +33,12 @@
             <div th:each="station : ${radioStations}" class="col-md-4">
                 <div class="station-card">
                     <a th:href="@{/station/{id}(id=${station.id})}">
-                        <img th:src="@{https://via.placeholder.com/300x200.png?text=Radio}" class="card-img-top" alt="Radio Station Image">
+                        <img th:src="@{images/radio.jpg}" class="card-img-top" alt="Radio Station Image">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${station.name}">Station Name</h5>
                         <p class="card-text" th:text="${station.country}">Country</p>
-                        <a href="${station.website}">Web Site</a>
+                        <a th:href="@{${station.website}}">Click for radio web site</a>
                     </div>
                 </div>
             </div>
