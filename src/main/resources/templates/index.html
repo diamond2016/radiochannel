@@ -36,8 +36,9 @@
                         <img th:src="@{https://via.placeholder.com/300x200.png?text=Radio}" class="card-img-top" alt="Radio Station Image">
                     </a>
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${station.stationName}">Station Name</h5>
+                        <h5 class="card-title" th:text="${station.name}">Station Name</h5>
                         <p class="card-text" th:text="${station.country}">Country</p>
+                        <a href="${station.website}">Web Site</a>
                     </div>
                 </div>
             </div>
